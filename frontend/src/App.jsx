@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
+const API_BASE_URL = "https://nutriscan-ai-4889.onrender.com";
 
 function App() {
   const [result, setResult] = useState("");
@@ -13,7 +14,7 @@ function App() {
   const [totalScans, setTotalScans] = useState(0);
 
 useEffect(() => {
-    fetch('http://localhost:5000/api/history')
+    fetch('https://nutriscan-ai-4889.onrender.com/api/history')
       .then(res => res.json())
       .then(data => setHistory(data))
       .catch(err => console.log("History fetch failed"));
@@ -23,7 +24,7 @@ useEffect(() => {
   const availableGoals = ['Fat Loss', 'Weight Gain', 'Skin Issues', 'Digestion', 'Muscle Growth'];
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/stats')
+    fetch('https://nutriscan-ai-4889.onrender.com/api/stats')
       .then(res => res.json())
       .then(data => setTotalScans(data.totalScans || 0))
       .catch(err => console.log("Stats fetch failed"));
@@ -55,7 +56,7 @@ useEffect(() => {
     formData.append('userGoal', goals.join(', ') || "General Health");
 
     try {
-      const response = await fetch('http://localhost:5000/api/scan-food', { 
+      const response = await fetch('https://nutriscan-ai-4889.onrender.com/api/scan-food', { 
         method: 'POST', 
         body: formData 
       });
@@ -73,7 +74,7 @@ useEffect(() => {
   const sendFeedback = async () => {
     if (!feedback) return;
     try {
-      await fetch('http://localhost:5000/api/feedback', {
+      await fetch('https://nutriscan-ai-4889.onrender.com/api/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ note: feedback })
@@ -86,7 +87,7 @@ useEffect(() => {
   };
 const logMeal = async (foodType) => {
   try {
-    await fetch('http://localhost:5000/api/save-meal', {
+    await fetch('https://nutriscan-ai-4889.onrender.com/api/save-meal', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
